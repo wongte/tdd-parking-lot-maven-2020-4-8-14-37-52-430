@@ -6,11 +6,12 @@ import org.junit.Test;
 
 public class ParkingBoyTest {
 
+    public static final int PARKING_LOT_CAPACITY = 10;
     private ParkingBoy parkingBoy;
 
     @Before
     public void setUp() {
-        ParkingLot parkingLot = new ParkingLot(10);
+        ParkingLot parkingLot = new ParkingLot(PARKING_LOT_CAPACITY);
         parkingBoy = new ParkingBoy(parkingLot);
     }
 
@@ -72,7 +73,7 @@ public class ParkingBoyTest {
 
     @Test
     public void test_park_car_when_lot_is_full_then_not_return_ticket() {
-        for (int times = 1; times <= 10; times++) {
+        for (int times = 1; times <= PARKING_LOT_CAPACITY; times++) {
             Car car = new Car();
             parkingBoy.parkCar(car);
         }
