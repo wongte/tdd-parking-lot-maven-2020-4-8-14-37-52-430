@@ -21,8 +21,9 @@ public class ParkingLot {
         return capacity;
     }
 
+
     public ParkingTicket parkCar(Car car) {
-        if (this.getCapacity() <= ticketCarMap.size()) {
+        if (this.isFull()) {
             return null;
         }
         Set<ParkingTicket> allParkingTickets = ticketCarMap.keySet();
@@ -38,5 +39,9 @@ public class ParkingLot {
 
     public Car fetchCar(ParkingTicket ticket) {
         return ticketCarMap.remove(ticket);
+    }
+
+    public boolean isFull() {
+        return this.getCapacity() <= ticketCarMap.size();
     }
 }
