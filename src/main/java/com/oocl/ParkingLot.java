@@ -1,8 +1,13 @@
 package com.oocl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 public class ParkingLot {
     private final int DEFAULT_CAPACITY = 10;
     private final int capacity;
+    private Map<ParkingTicket, Car> ticketCarMap = new HashMap<ParkingTicket, Car>();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -14,5 +19,24 @@ public class ParkingLot {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public ParkingTicket parkCar(Car car) {
+        if (this.getCapacity() <= ticketCarMap.size()) {
+            return null;
+        }
+        Set<ParkingTicket> allParkingTickets = ticketCarMap.keySet();
+        for (ParkingTicket parkingTicket : allParkingTickets) {
+            if (ticketCarMap.get(parkingTicket) == car) {
+                return null;
+            }
+        }
+        ParkingTicket ticket = new ParkingTicket();
+        ticketCarMap.put(ticket, car);
+        return ticket;
+    }
+
+    public Car fetchCar(ParkingTicket ticket) {
+        return ticketCarMap.remove(ticket);
     }
 }
