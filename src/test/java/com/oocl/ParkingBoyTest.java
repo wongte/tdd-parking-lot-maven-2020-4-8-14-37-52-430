@@ -45,5 +45,15 @@ public class ParkingBoyTest {
         Assert.assertNull(fetchedCar);
     }
 
+    @Test
+    public void test_park_multiple_car_when_dont_give_ticket_then_not_return_car() {
+        ParkingBoy parkingBoy = new ParkingBoy();
+        Car car = new Car();
+        parkingBoy.parkCar(car);
+        Car fetchedCar = parkingBoy.fetchCar(null);
+
+        Assert.assertNull(fetchedCar);
+    }
+
 
 }
