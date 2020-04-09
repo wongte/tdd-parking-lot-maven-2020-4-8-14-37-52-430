@@ -2,6 +2,7 @@ package com.oocl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ParkingBoy {
     private final ParkingLot parkingLot;
@@ -14,6 +15,12 @@ public class ParkingBoy {
     public ParkingTicket parkCar(Car car) {
         if (parkingLot.getCapacity() <= ticketCarMap.size()) {
             return null;
+        }
+        Set<ParkingTicket> allParkingTickets = ticketCarMap.keySet();
+        for (ParkingTicket parkingTicket : allParkingTickets) {
+            if (ticketCarMap.get(parkingTicket) == car) {
+                return null;
+            }
         }
         ParkingTicket ticket = new ParkingTicket();
         ticketCarMap.put(ticket, car);

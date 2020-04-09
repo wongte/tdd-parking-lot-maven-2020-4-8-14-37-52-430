@@ -83,4 +83,13 @@ public class ParkingBoyTest {
         Assert.assertNull(ticket);
     }
 
+    @Test
+    public void test_park_car_with_parked_car_then_not_return_ticket() {
+        Car car = new Car();
+        parkingBoy.parkCar(car);
+        ParkingTicket ticketWithParkedCar = parkingBoy.parkCar(car);
+
+        Assert.assertNull(ticketWithParkedCar);
+    }
+
 }
