@@ -11,4 +11,14 @@ public class ParkingBoyTest {
         ParkingTicket ticket = parkingBoy.parkCar(car);
         Assert.assertNotNull(ticket);
     }
+
+    @Test
+    public void test_fetch_car_when_give_ticket_then_return_car() {
+        ParkingBoy parkingBoy = new ParkingBoy();
+        Car car = new Car();
+        ParkingTicket ticket = parkingBoy.parkCar(car);
+        Car fetchedCar = parkingBoy.fetchCar(ticket);
+
+        Assert.assertEquals(car, fetchedCar);
+    }
 }
