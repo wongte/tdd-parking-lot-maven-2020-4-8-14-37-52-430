@@ -21,4 +21,18 @@ public class ParkingBoyTest {
 
         Assert.assertEquals(car, fetchedCar);
     }
+
+    @Test
+    public void test_park_multiple_car_when_give_ticket_then_return_correct_car() {
+        ParkingBoy parkingBoy = new ParkingBoy();
+        Car car1 = new Car();
+        Car car2 = new Car();
+        ParkingTicket ticketWithCar1 = parkingBoy.parkCar(car1);
+        parkingBoy.parkCar(car2);
+        Car fetchedCar = parkingBoy.fetchCar(ticketWithCar1);
+
+        Assert.assertEquals(car1, fetchedCar);
+    }
+
+
 }
