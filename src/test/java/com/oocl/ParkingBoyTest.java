@@ -6,14 +6,9 @@ import com.oocl.exception.ParkingTicketNotFoundException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class ParkingBoyTest {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     public static final int PARKING_LOT_CAPACITY = 10;
     private ParkingBoy parkingBoy;
 
@@ -51,36 +46,26 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void test_fetch_car_when_give_incorrect_ticket_then_throw_unrecognized_ticket_exception() throws InvalidParkingTicketException, NotEnoughPositionException {
-        expectedException.expect(UnrecognizedParkingTicketException.class);
-        expectedException.expectMessage("Unrecognized parking ticket.");
+    public void test_fetch_car_when_give_incorrect_ticket_then_throw_unrecognized_ticket_exception() throws NotEnoughPositionException {
         Car car = new Car();
         parkingBoy.parkCar(car);
         ParkingTicket invalidTicket = new ParkingTicket();
-        parkingBoy.fetchCar(invalidTicket);
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetchCar(invalidTicket));
     }
 
     @Test
-    public void test_fetch_car_when_dont_give_ticket_then_throw_ticket_not_found_exception() throws InvalidParkingTicketException, NotEnoughPositionException {
-        expectedException.expect(ParkingTicketNotFoundException.class);
-        expectedException.expectMessage("Please provide your parking ticket.");
+    public void test_fetch_car_when_dont_give_ticket_then_throw_ticket_not_found_exception() throws NotEnoughPositionException {
         Car car = new Car();
         parkingBoy.parkCar(car);
-        Car fetchedCar = parkingBoy.fetchCar(null);
-
-        Assert.assertNull(fetchedCar);
+        Assert.assertThrows(ParkingTicketNotFoundException.class, () -> parkingBoy.fetchCar(null));
     }
 
     @Test
     public void test_fetch_car_when_give_used_ticket_then_throw_unrecognized_ticket_exception() throws InvalidParkingTicketException, NotEnoughPositionException {
-        expectedException.expect(UnrecognizedParkingTicketException.class);
-        expectedException.expectMessage("Unrecognized parking ticket.");
         Car car = new Car();
         ParkingTicket ticket = parkingBoy.parkCar(car);
         parkingBoy.fetchCar(ticket);
-        Car fetchedCarWithUsedTicket = parkingBoy.fetchCar(ticket);
-
-        Assert.assertNull(fetchedCarWithUsedTicket);
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetchCar(ticket));
     }
 
     @Test
