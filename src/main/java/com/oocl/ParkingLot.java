@@ -1,6 +1,7 @@
 package com.oocl;
 
 import com.oocl.exception.InvalidParkingTicketException;
+import com.oocl.exception.NotEnoughPositionException;
 import com.oocl.exception.ParkingTicketNotFoundException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
 
@@ -25,9 +26,9 @@ public class ParkingLot {
     }
 
 
-    public ParkingTicket parkCar(Car car) {
+    public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
         if (this.isFull()) {
-            return null;
+            throw new NotEnoughPositionException();
         }
         if (this.isContainsCar(car)) {
             return null;

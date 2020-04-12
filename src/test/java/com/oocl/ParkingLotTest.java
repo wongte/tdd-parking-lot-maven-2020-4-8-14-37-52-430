@@ -1,5 +1,6 @@
 package com.oocl;
 
+import com.oocl.exception.NotEnoughPositionException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,14 +14,14 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void test_isFull_when_park_is_full_return_true() {
+    public void test_isFull_when_park_is_full_return_true() throws NotEnoughPositionException {
         ParkingLot parkingLot = new ParkingLot(1);
         parkingLot.parkCar(new Car());
         Assert.assertTrue(parkingLot.isFull());
     }
 
     @Test
-    public void test_isFull_when_park_is_not_full_return_false() {
+    public void test_isFull_when_park_is_not_full_return_false() throws NotEnoughPositionException {
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.parkCar(new Car());
         Assert.assertFalse(parkingLot.isFull());
