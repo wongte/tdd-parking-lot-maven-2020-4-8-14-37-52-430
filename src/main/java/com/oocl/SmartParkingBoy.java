@@ -4,6 +4,8 @@ import com.oocl.exception.NotEnoughPositionException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class SmartParkingBoy extends ParkingBoy {
     public SmartParkingBoy(List<ParkingLot> parkingLotList) {
@@ -13,12 +15,10 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
         List<ParkingLot> parkingLotList = this.getParkingLotList();
-        parkingLotList.sort(Comparator.comparingInt(ParkingLot::getEmptyLot).reversed());
-        for (ParkingLot parkingLot : parkingLotList) {
-            if (!parkingLot.isFull()) {
-                return parkingLot.parkCar(car);
-            }
-        }
-        throw new NotEnoughPositionException();
+        Stream<ParkingLot> nonFullParkingLot = parkingLotList.stream().filter(lot -> !lot.isFull());
+        Optional<ParkingLot> parkingLotWithHighestEmptyLot = nonFullParkingLot.max(Comparator.comparingInt(ParkingLot::getEmptyLot));
+        return parkingLotWithHighestEmptyLot
+                .orElseThrow(NotEnoughPositionException::new)
+                .parkCar(car);
     }
 }
