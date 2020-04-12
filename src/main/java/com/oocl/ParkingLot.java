@@ -4,7 +4,6 @@ import com.oocl.exception.InvalidParkingTicketException;
 import com.oocl.exception.NotEnoughPositionException;
 import com.oocl.exception.ParkingTicketNotFoundException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
-import sun.security.krb5.internal.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,7 @@ import java.util.Map;
 public class ParkingLot {
     private final int DEFAULT_CAPACITY = 10;
     private final int capacity;
-    private Map<ParkingTicket, Car> ticketCarMap = new HashMap<ParkingTicket, Car>();
+    private Map<ParkingTicket, Car> ticketCarMap = new HashMap<>();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -59,5 +58,9 @@ public class ParkingLot {
 
     public boolean isThisLotTicket(ParkingTicket ticket) {
         return this.ticketCarMap.containsKey(ticket);
+    }
+
+    public int getEmptyLot() {
+        return this.getCapacity() - this.ticketCarMap.size();
     }
 }

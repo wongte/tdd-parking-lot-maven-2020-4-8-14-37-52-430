@@ -34,4 +34,8 @@ public class ParkingBoy {
         }
         throw new UnrecognizedParkingTicketException();
     }
+
+    protected List<ParkingLot> getParkingLotList() {
+        return parkingLotList;
+    }
 }
