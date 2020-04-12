@@ -1,5 +1,9 @@
 package com.oocl;
 
+import com.oocl.exception.InvalidParkingTicketException;
+import com.oocl.exception.ParkingTicketNotFoundException;
+import com.oocl.exception.UnrecognizedParkingTicketException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +41,13 @@ public class ParkingLot {
         return ticketCarMap.containsValue(car);
     }
 
-    public Car fetchCar(ParkingTicket ticket) {
+    public Car fetchCar(ParkingTicket ticket) throws InvalidParkingTicketException {
+        if (ticket == null) {
+            throw new ParkingTicketNotFoundException();
+        }
+        if (!this.ticketCarMap.containsKey(ticket)) {
+            throw new UnrecognizedParkingTicketException();
+        }
         return ticketCarMap.remove(ticket);
     }
 
