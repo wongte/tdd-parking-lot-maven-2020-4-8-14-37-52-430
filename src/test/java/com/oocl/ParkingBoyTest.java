@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingBoyTest {
     public static final int PARKING_LOT_CAPACITY = 10;
     private ParkingBoy parkingBoy;
@@ -15,7 +18,9 @@ public class ParkingBoyTest {
     @Before
     public void setUp() {
         ParkingLot parkingLot = new ParkingLot(PARKING_LOT_CAPACITY);
-        parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLotList = new ArrayList<>();
+        parkingLotList.add(parkingLot);
+        parkingBoy = new ParkingBoy(parkingLotList);
     }
 
     @Test
@@ -85,6 +90,44 @@ public class ParkingBoyTest {
         ParkingTicket ticketWithParkedCar = parkingBoy.parkCar(car);
 
         Assert.assertNull(ticketWithParkedCar);
+    }
+
+    @Test
+    public void test_when_first_lot_not_full_then_park_first_lot() throws NotEnoughPositionException, InvalidParkingTicketException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        List<ParkingLot> parkingLotList = new ArrayList<>();
+        parkingLotList.add(parkingLot1);
+        parkingLotList.add(parkingLot2);
+        parkingBoy = new ParkingBoy(parkingLotList);
+
+        Car carInFirstLot = new Car();
+        ParkingTicket ticketInLot1 = parkingBoy.parkCar(carInFirstLot);
+
+        Car carInSecondLot = new Car();
+        parkingBoy.parkCar(carInSecondLot);
+
+        Car carFetchedInLot1 = parkingLot1.fetchCar(ticketInLot1);
+        Assert.assertEquals(carInFirstLot, carFetchedInLot1);
+    }
+
+    @Test
+    public void test_when_first_lot_full_then_park_second_lot() throws NotEnoughPositionException, InvalidParkingTicketException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        List<ParkingLot> parkingLotList = new ArrayList<>();
+        parkingLotList.add(parkingLot1);
+        parkingLotList.add(parkingLot2);
+        parkingBoy = new ParkingBoy(parkingLotList);
+
+        Car carInFirstLot = new Car();
+        parkingBoy.parkCar(carInFirstLot);
+
+        Car carInSecondLot = new Car();
+        ParkingTicket secondLotTicket = parkingBoy.parkCar(carInSecondLot);
+
+        Car carFetchedInLot2 = parkingLot2.fetchCar(secondLotTicket);
+        Assert.assertEquals(carInSecondLot, carFetchedInLot2);
     }
 
 }
