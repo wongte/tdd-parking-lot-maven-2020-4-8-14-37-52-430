@@ -2,7 +2,6 @@ package com.oocl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ParkingLot {
     private final int DEFAULT_CAPACITY = 10;
@@ -26,15 +25,16 @@ public class ParkingLot {
         if (this.isFull()) {
             return null;
         }
-        Set<ParkingTicket> allParkingTickets = ticketCarMap.keySet();
-        for (ParkingTicket parkingTicket : allParkingTickets) {
-            if (ticketCarMap.get(parkingTicket) == car) {
-                return null;
-            }
+        if (this.isContainsCar(car)) {
+            return null;
         }
         ParkingTicket ticket = new ParkingTicket();
         ticketCarMap.put(ticket, car);
         return ticket;
+    }
+
+    private boolean isContainsCar(Car car) {
+        return ticketCarMap.containsValue(car);
     }
 
     public Car fetchCar(ParkingTicket ticket) {
