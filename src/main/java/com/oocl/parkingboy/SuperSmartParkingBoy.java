@@ -1,5 +1,8 @@
-package com.oocl;
+package com.oocl.parkingboy;
 
+import com.oocl.Car;
+import com.oocl.ParkingLot;
+import com.oocl.ParkingTicket;
 import com.oocl.exception.NotEnoughPositionException;
 
 import java.util.List;

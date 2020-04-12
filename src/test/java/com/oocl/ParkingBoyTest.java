@@ -4,6 +4,7 @@ import com.oocl.exception.InvalidParkingTicketException;
 import com.oocl.exception.NotEnoughPositionException;
 import com.oocl.exception.ParkingTicketNotFoundException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
+import com.oocl.parkingboy.ParkingBoy;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,6 +3,7 @@ package com.oocl;
 import com.oocl.exception.InvalidParkingTicketException;
 import com.oocl.exception.NotEnoughPositionException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
+import com.oocl.parkingboy.SuperSmartParkingBoy;
 import org.junit.Assert;
 import org.junit.Test;
 
