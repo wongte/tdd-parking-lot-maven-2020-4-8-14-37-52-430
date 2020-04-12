@@ -2,6 +2,8 @@ package com.oocl;
 
 import com.oocl.exception.InvalidParkingTicketException;
 import com.oocl.exception.NotEnoughPositionException;
+import com.oocl.exception.ParkingTicketNotFoundException;
+import com.oocl.exception.UnrecognizedParkingTicketException;
 
 import java.util.List;
 
@@ -22,6 +24,14 @@ public class ParkingBoy {
     }
 
     public Car fetchCar(ParkingTicket ticket) throws InvalidParkingTicketException {
-        return parkingLotList.get(0).fetchCar(ticket);
+        if (ticket == null) {
+            throw new ParkingTicketNotFoundException();
+        }
+        for (ParkingLot parkingLot : parkingLotList) {
+            if (parkingLot.isThisLotTicket(ticket)) {
+                return parkingLot.fetchCar(ticket);
+            }
+        }
+        throw new UnrecognizedParkingTicketException();
     }
 }
