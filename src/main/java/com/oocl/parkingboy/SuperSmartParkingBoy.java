@@ -19,8 +19,8 @@ public class SuperSmartParkingBoy extends ParkingBoy {
 
         Stream<ParkingLot> nonFullParkingLotList = parkingLotList.stream().filter(lot -> !lot.isFull());
         Optional<ParkingLot> parkingLotWithLargestRate = nonFullParkingLotList.max((lot1, lot2) -> {
-            double availableRateInLot1 = (double)lot1.getEmptyLot() / lot1.getCapacity();
-            double availableRateInLot2 = (double)lot2.getEmptyLot() / lot2.getCapacity();
+            double availableRateInLot1 = (double)lot1.getNumberOfEmptyLot() / lot1.getCapacity();
+            double availableRateInLot2 = (double)lot2.getNumberOfEmptyLot() / lot2.getCapacity();
             return Double.compare(availableRateInLot1, availableRateInLot2);
         });
 

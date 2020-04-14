@@ -60,7 +60,7 @@ public class ParkingLot {
         return this.ticketCarMap.containsKey(ticket);
     }
 
-    public int getEmptyLot() {
+    public int getNumberOfEmptyLot() {
         return this.getCapacity() - this.ticketCarMap.size();
     }
 }

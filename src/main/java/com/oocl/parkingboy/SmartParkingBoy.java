@@ -19,7 +19,7 @@ public class SmartParkingBoy extends ParkingBoy {
     public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
         List<ParkingLot> parkingLotList = this.getParkingLotList();
         Stream<ParkingLot> nonFullParkingLot = parkingLotList.stream().filter(lot -> !lot.isFull());
-        Optional<ParkingLot> parkingLotWithHighestEmptyLot = nonFullParkingLot.max(Comparator.comparingInt(ParkingLot::getEmptyLot));
+        Optional<ParkingLot> parkingLotWithHighestEmptyLot = nonFullParkingLot.max(Comparator.comparingInt(ParkingLot::getNumberOfEmptyLot));
         return parkingLotWithHighestEmptyLot
                 .orElseThrow(NotEnoughPositionException::new)
                 .parkCar(car);
