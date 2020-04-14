@@ -9,6 +9,7 @@ import com.oocl.exception.ParkingTicketNotFoundException;
 import com.oocl.exception.UnrecognizedParkingTicketException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ParkingBoy {
     private final List<ParkingLot> parkingLots;
@@ -18,24 +19,28 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) throws NotEnoughPositionException {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (!parkingLot.isFull()) {
-                return parkingLot.park(car);
-            }
-        }
-        throw new NotEnoughPositionException();
+        Optional<ParkingLot> firstNonFullLot = parkingLots
+                .stream()
+                .filter(parkingLot -> !parkingLot.isFull())
+                .findFirst();
+
+        return firstNonFullLot
+                .orElseThrow(NotEnoughPositionException::new)
+                .park(car);
     }
 
     public Car fetch(ParkingTicket ticket) throws InvalidParkingTicketException {
         if (ticket == null) {
             throw new ParkingTicketNotFoundException();
         }
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.isThisLotTicket(ticket)) {
-                return parkingLot.fetch(ticket);
-            }
-        }
-        throw new UnrecognizedParkingTicketException();
+        Optional<ParkingLot> firstMatchParkingLot = parkingLots
+                .stream()
+                .filter(parkingLot -> parkingLot.isThisLotTicket(ticket))
+                .findFirst();
+
+        return firstMatchParkingLot
+                .orElseThrow(UnrecognizedParkingTicketException::new)
+                .fetch(ticket);
     }
 
     protected List<ParkingLot> getParkingLots() {
