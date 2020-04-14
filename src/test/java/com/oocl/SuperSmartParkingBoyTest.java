@@ -18,9 +18,9 @@ public class SuperSmartParkingBoyTest {
         // available position rate = (positions available / total capacity)
         ParkingLot parkingLot1 = new ParkingLot(4); // rate = 2 / 4 = 0.5
         ParkingLot parkingLot2 = new ParkingLot(3); // rate = 2 / 3 = 0.66
-        parkingLot1.parkCar(new Car());
-        parkingLot1.parkCar(new Car());
-        parkingLot2.parkCar(new Car());
+        parkingLot1.park(new Car());
+        parkingLot1.park(new Car());
+        parkingLot2.park(new Car());
 
         List<ParkingLot> parkingLotList = new ArrayList<>();
         parkingLotList.add(parkingLot1);
@@ -28,11 +28,11 @@ public class SuperSmartParkingBoyTest {
         parkingBoy = new SuperSmartParkingBoy(parkingLotList);
 
         Car carInLot2 = new Car();
-        ParkingTicket ticketInLot2 = parkingBoy.parkCar(carInLot2);
+        ParkingTicket ticketInLot2 = parkingBoy.park(carInLot2);
 
-        Car carFetchedInLot2 = parkingLot2.fetchCar(ticketInLot2);
+        Car carFetchedInLot2 = parkingLot2.fetch(ticketInLot2);
         Assert.assertEquals(carFetchedInLot2, carInLot2);
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot1.fetchCar(ticketInLot2));
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot1.fetch(ticketInLot2));
     }
 
     @Test
@@ -41,9 +41,9 @@ public class SuperSmartParkingBoyTest {
         ParkingLot parkingLot1 = new ParkingLot(3); // rate = 2 / 3 = 0.66
         ParkingLot parkingLot2 = new ParkingLot(4); // rate = 2 / 4 = 0.5
 
-        parkingLot1.parkCar(new Car());
-        parkingLot2.parkCar(new Car());
-        parkingLot2.parkCar(new Car());
+        parkingLot1.park(new Car());
+        parkingLot2.park(new Car());
+        parkingLot2.park(new Car());
 
         List<ParkingLot> parkingLotList = new ArrayList<>();
         parkingLotList.add(parkingLot1);
@@ -51,11 +51,11 @@ public class SuperSmartParkingBoyTest {
         parkingBoy = new SuperSmartParkingBoy(parkingLotList);
 
         Car carInLot1 = new Car();
-        ParkingTicket ticketInLot1 = parkingBoy.parkCar(carInLot1);
+        ParkingTicket ticketInLot1 = parkingBoy.park(carInLot1);
 
-        Car carFetchedInLot1 = parkingLot1.fetchCar(ticketInLot1);
+        Car carFetchedInLot1 = parkingLot1.fetch(ticketInLot1);
         Assert.assertEquals(carFetchedInLot1, carInLot1);
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot2.fetchCar(ticketInLot1));
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot2.fetch(ticketInLot1));
     }
 
 }

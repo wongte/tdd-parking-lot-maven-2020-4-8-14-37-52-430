@@ -27,15 +27,15 @@ public class ParkingBoyTest {
     @Test
     public void test_park_when_give_car_then_return_ticket() throws NotEnoughPositionException {
         Car car = new Car();
-        ParkingTicket ticket = parkingBoy.parkCar(car);
+        ParkingTicket ticket = parkingBoy.park(car);
         Assert.assertNotNull(ticket);
     }
 
     @Test
     public void test_fetch_car_when_give_ticket_then_return_car() throws InvalidParkingTicketException, NotEnoughPositionException {
         Car car = new Car();
-        ParkingTicket ticket = parkingBoy.parkCar(car);
-        Car fetchedCar = parkingBoy.fetchCar(ticket);
+        ParkingTicket ticket = parkingBoy.park(car);
+        Car fetchedCar = parkingBoy.fetch(ticket);
 
         Assert.assertEquals(car, fetchedCar);
     }
@@ -44,9 +44,9 @@ public class ParkingBoyTest {
     public void test_park_multiple_car_when_give_ticket_then_return_correct_car() throws InvalidParkingTicketException, NotEnoughPositionException {
         Car car1 = new Car();
         Car car2 = new Car();
-        ParkingTicket ticketWithCar1 = parkingBoy.parkCar(car1);
-        parkingBoy.parkCar(car2);
-        Car fetchedCar = parkingBoy.fetchCar(ticketWithCar1);
+        ParkingTicket ticketWithCar1 = parkingBoy.park(car1);
+        parkingBoy.park(car2);
+        Car fetchedCar = parkingBoy.fetch(ticketWithCar1);
 
         Assert.assertEquals(car1, fetchedCar);
     }
@@ -54,41 +54,41 @@ public class ParkingBoyTest {
     @Test
     public void test_fetch_car_when_give_incorrect_ticket_then_throw_unrecognized_ticket_exception() throws NotEnoughPositionException {
         Car car = new Car();
-        parkingBoy.parkCar(car);
+        parkingBoy.park(car);
         ParkingTicket invalidTicket = new ParkingTicket();
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetchCar(invalidTicket));
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(invalidTicket));
     }
 
     @Test
     public void test_fetch_car_when_dont_give_ticket_then_throw_ticket_not_found_exception() throws NotEnoughPositionException {
         Car car = new Car();
-        parkingBoy.parkCar(car);
-        Assert.assertThrows(ParkingTicketNotFoundException.class, () -> parkingBoy.fetchCar(null));
+        parkingBoy.park(car);
+        Assert.assertThrows(ParkingTicketNotFoundException.class, () -> parkingBoy.fetch(null));
     }
 
     @Test
     public void test_fetch_car_when_give_used_ticket_then_throw_unrecognized_ticket_exception() throws InvalidParkingTicketException, NotEnoughPositionException {
         Car car = new Car();
-        ParkingTicket ticket = parkingBoy.parkCar(car);
-        parkingBoy.fetchCar(ticket);
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetchCar(ticket));
+        ParkingTicket ticket = parkingBoy.park(car);
+        parkingBoy.fetch(ticket);
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
     }
 
     @Test
     public void test_park_car_when_lot_is_full_then_throw_not_enough_position_exception() throws NotEnoughPositionException{
         for (int times = 1; times <= PARKING_LOT_CAPACITY; times++) {
             Car car = new Car();
-            parkingBoy.parkCar(car);
+            parkingBoy.park(car);
         }
         Car carWithFullLot = new Car();
-        Assert.assertThrows(NotEnoughPositionException.class, () -> parkingBoy.parkCar(carWithFullLot) );
+        Assert.assertThrows(NotEnoughPositionException.class, () -> parkingBoy.park(carWithFullLot) );
     }
 
     @Test
     public void test_park_car_with_parked_car_then_not_return_ticket() throws NotEnoughPositionException {
         Car car = new Car();
-        parkingBoy.parkCar(car);
-        ParkingTicket ticketWithParkedCar = parkingBoy.parkCar(car);
+        parkingBoy.park(car);
+        ParkingTicket ticketWithParkedCar = parkingBoy.park(car);
 
         Assert.assertNull(ticketWithParkedCar);
     }
@@ -103,12 +103,12 @@ public class ParkingBoyTest {
         parkingBoy = new ParkingBoy(parkingLotList);
 
         Car carInFirstLot = new Car();
-        parkingBoy.parkCar(carInFirstLot);
+        parkingBoy.park(carInFirstLot);
 
         Car carInSecondLot = new Car();
-        ParkingTicket secondLotTicket = parkingBoy.parkCar(carInSecondLot);
+        ParkingTicket secondLotTicket = parkingBoy.park(carInSecondLot);
 
-        Car carFetchedInLot2 = parkingLot2.fetchCar(secondLotTicket);
+        Car carFetchedInLot2 = parkingLot2.fetch(secondLotTicket);
         Assert.assertEquals(carInSecondLot, carFetchedInLot2);
     }
 
@@ -122,17 +122,17 @@ public class ParkingBoyTest {
         parkingBoy = new ParkingBoy(parkingLotList);
 
         Car carInFirstLot = new Car();
-        ParkingTicket ticketInLot1 = parkingBoy.parkCar(carInFirstLot);
+        ParkingTicket ticketInLot1 = parkingBoy.park(carInFirstLot);
 
         Car carInSecondLot = new Car();
-        parkingBoy.parkCar(carInSecondLot);
+        parkingBoy.park(carInSecondLot);
 
-        parkingBoy.fetchCar(ticketInLot1);
+        parkingBoy.fetch(ticketInLot1);
 
         Car newCarInFirstLot = new Car();
-        ParkingTicket newTicketInLot1 = parkingBoy.parkCar(newCarInFirstLot);
+        ParkingTicket newTicketInLot1 = parkingBoy.park(newCarInFirstLot);
 
-        Car carFetchedInLot1 = parkingLot1.fetchCar(newTicketInLot1);
+        Car carFetchedInLot1 = parkingLot1.fetch(newTicketInLot1);
         Assert.assertEquals(carFetchedInLot1, newCarInFirstLot);
     }
 }

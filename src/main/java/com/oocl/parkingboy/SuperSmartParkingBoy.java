@@ -14,8 +14,8 @@ public class SuperSmartParkingBoy extends ParkingBoy {
         super(parkingLotList);
     }
     @Override
-    public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
-        List<ParkingLot> parkingLotList = this.getParkingLotList();
+    public ParkingTicket park(Car car) throws NotEnoughPositionException {
+        List<ParkingLot> parkingLotList = this.getParkingLots();
 
         Stream<ParkingLot> nonFullParkingLotList = parkingLotList.stream().filter(lot -> !lot.isFull());
         Optional<ParkingLot> parkingLotWithLargestRate = nonFullParkingLotList.max((lot1, lot2) -> {
@@ -26,6 +26,6 @@ public class SuperSmartParkingBoy extends ParkingBoy {
 
         return parkingLotWithLargestRate
                 .orElseThrow(NotEnoughPositionException::new)
-                .parkCar(car);
+                .park(car);
     }
 }

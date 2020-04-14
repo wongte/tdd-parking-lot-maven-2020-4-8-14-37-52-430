@@ -11,34 +11,34 @@ import com.oocl.exception.UnrecognizedParkingTicketException;
 import java.util.List;
 
 public class ParkingBoy {
-    private final List<ParkingLot> parkingLotList;
+    private final List<ParkingLot> parkingLots;
 
     public ParkingBoy(List<ParkingLot> parkingLotList) {
-        this.parkingLotList = parkingLotList;
+        this.parkingLots = parkingLotList;
     }
 
-    public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
-        for (ParkingLot parkingLot : parkingLotList) {
+    public ParkingTicket park(Car car) throws NotEnoughPositionException {
+        for (ParkingLot parkingLot : parkingLots) {
             if (!parkingLot.isFull()) {
-                return parkingLot.parkCar(car);
+                return parkingLot.park(car);
             }
         }
         throw new NotEnoughPositionException();
     }
 
-    public Car fetchCar(ParkingTicket ticket) throws InvalidParkingTicketException {
+    public Car fetch(ParkingTicket ticket) throws InvalidParkingTicketException {
         if (ticket == null) {
             throw new ParkingTicketNotFoundException();
         }
-        for (ParkingLot parkingLot : parkingLotList) {
+        for (ParkingLot parkingLot : parkingLots) {
             if (parkingLot.isThisLotTicket(ticket)) {
-                return parkingLot.fetchCar(ticket);
+                return parkingLot.fetch(ticket);
             }
         }
         throw new UnrecognizedParkingTicketException();
     }
 
-    protected List<ParkingLot> getParkingLotList() {
-        return parkingLotList;
+    protected List<ParkingLot> getParkingLots() {
+        return parkingLots;
     }
 }

@@ -26,11 +26,11 @@ public class ParkingLot {
     }
 
 
-    public ParkingTicket parkCar(Car car) throws NotEnoughPositionException {
+    public ParkingTicket park(Car car) throws NotEnoughPositionException {
         if (this.isFull()) {
             throw new NotEnoughPositionException();
         }
-        if (this.isContainsCar(car)) {
+        if (this.isContains(car)) {
             return null;
         }
         ParkingTicket ticket = new ParkingTicket();
@@ -38,11 +38,11 @@ public class ParkingLot {
         return ticket;
     }
 
-    private boolean isContainsCar(Car car) {
+    private boolean isContains(Car car) {
         return ticketCarMap.containsValue(car);
     }
 
-    public Car fetchCar(ParkingTicket ticket) throws InvalidParkingTicketException {
+    public Car fetch(ParkingTicket ticket) throws InvalidParkingTicketException {
         if (ticket == null) {
             throw new ParkingTicketNotFoundException();
         }

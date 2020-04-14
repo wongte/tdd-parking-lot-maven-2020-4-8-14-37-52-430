@@ -17,18 +17,18 @@ public class SmartParkingBoyTest {
     public void test_smart_parking_boy_park_when_lot1_has_more_empty() throws NotEnoughPositionException, InvalidParkingTicketException {
         ParkingLot lot1 = new ParkingLot(2);
         ParkingLot lot2 = new ParkingLot(2);
-        lot2.parkCar(new Car());
+        lot2.park(new Car());
         List<ParkingLot> parkingLotList = new ArrayList<>();
         parkingLotList.add(lot1);
         parkingLotList.add(lot2);
         parkingBoy = new SmartParkingBoy(parkingLotList);
 
         Car carInLot1 = new Car();
-        ParkingTicket ticketInLot1 = parkingBoy.parkCar(carInLot1);
+        ParkingTicket ticketInLot1 = parkingBoy.park(carInLot1);
 
-        Car carFetchedInLot1 = lot1.fetchCar(ticketInLot1);
+        Car carFetchedInLot1 = lot1.fetch(ticketInLot1);
         Assert.assertEquals(carFetchedInLot1, carInLot1);
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> lot2.fetchCar(ticketInLot1));
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> lot2.fetch(ticketInLot1));
     }
 
     @Test
@@ -36,17 +36,17 @@ public class SmartParkingBoyTest {
         ParkingLot lot1 = new ParkingLot(2);
         ParkingLot lot2 = new ParkingLot(2);
         List<ParkingLot> parkingLotList = new ArrayList<>();
-        lot1.parkCar(new Car());
+        lot1.park(new Car());
         parkingLotList.add(lot1);
         parkingLotList.add(lot2);
         parkingBoy = new SmartParkingBoy(parkingLotList);
 
         Car carInLot2 = new Car();
-        ParkingTicket ticketInLot2 = parkingBoy.parkCar(carInLot2);
+        ParkingTicket ticketInLot2 = parkingBoy.park(carInLot2);
 
-        Car carFetchedInLot2 = lot2.fetchCar(ticketInLot2);
+        Car carFetchedInLot2 = lot2.fetch(ticketInLot2);
         Assert.assertEquals(carFetchedInLot2, carInLot2);
-        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> lot1.fetchCar(ticketInLot2));
+        Assert.assertThrows(UnrecognizedParkingTicketException.class, () -> lot1.fetch(ticketInLot2));
     }
 
 }
