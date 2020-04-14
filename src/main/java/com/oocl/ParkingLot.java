@@ -46,7 +46,7 @@ public class ParkingLot {
         if (ticket == null) {
             throw new ParkingTicketNotFoundException();
         }
-        if (!this.ticketCarMap.containsKey(ticket)) {
+        if (!this.isThisLotTicket(ticket)) {
             throw new UnrecognizedParkingTicketException();
         }
         return ticketCarMap.remove(ticket);
