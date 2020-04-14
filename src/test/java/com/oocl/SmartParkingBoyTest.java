@@ -17,7 +17,9 @@ public class SmartParkingBoyTest {
     public void test_smart_parking_boy_park_when_lot1_has_more_empty() throws NotEnoughPositionException, InvalidParkingTicketException {
         ParkingLot lot1 = new ParkingLot(2);
         ParkingLot lot2 = new ParkingLot(2);
+
         lot2.park(new Car());
+
         List<ParkingLot> parkingLotList = new ArrayList<>();
         parkingLotList.add(lot1);
         parkingLotList.add(lot2);
@@ -35,8 +37,10 @@ public class SmartParkingBoyTest {
     public void test_smart_parking_boy_park_when_lot2_has_more_empty() throws NotEnoughPositionException, InvalidParkingTicketException {
         ParkingLot lot1 = new ParkingLot(2);
         ParkingLot lot2 = new ParkingLot(2);
-        List<ParkingLot> parkingLotList = new ArrayList<>();
+
         lot1.park(new Car());
+
+        List<ParkingLot> parkingLotList = new ArrayList<>();
         parkingLotList.add(lot1);
         parkingLotList.add(lot2);
         parkingBoy = new SmartParkingBoy(parkingLotList);
